@@ -1,0 +1,19 @@
+{
+  "name": "twitstagram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FranklinCedar92/Twitstagram"
+  },
+  "keywords": [
+    ""
+  ],
+  "author": "",
+  "license": "UNLICENSED"
+}
