@@ -1,4 +1,4 @@
-function addPizza() {
+function addUser() {
     // there will be consts for username and email
 
     const formData = { username, email };
