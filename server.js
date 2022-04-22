@@ -11,7 +11,7 @@ app.use(express.static('public'));
 app.use(require('./routes'));
 
 // mongoose connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/pizza-hunt', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/twitstagram', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
