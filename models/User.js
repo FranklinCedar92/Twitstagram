@@ -10,9 +10,16 @@ const userSchema = new Schema(
         },
         email: {
             type: String,
-            required: true,
+            required: [true, "Email required"],
             unique: true,
+            lowercase: true,
             // must match a valid email address
+            validate: {
+                validator: function(v) {
+                    return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
+                },
+                message: "Please enter a valid email"
+            }
         },
         thoughts: [
             // array of _id values referencing the Thought model
