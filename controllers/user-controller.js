@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 const userController = {
     // get all users
@@ -71,14 +71,34 @@ const userController = {
             .catch(err => res.status(400).json(err));
     },
 
-    // post friend
-    createFriend({ body }, res){
+    // post friend: Is this correct?
+    createFriend({ params, body }, res){
         // this has to select from the list of users
+        User.findOneAndUpdate(
+            { _id: params.username }, //is this the right criteria
+            { $push: { friends: username } }, // again, right criteria?
+            { new: true }
+        )
+        .then(dbUserData => {
+            if (!dbUserData) {
+                res.status(404).json({ message: 'No user found with this id' });
+                return;
+            }
+            res.json(dbUserData);
+        }) 
+        .catch(err => res.json(err));
+        
     },
 
-    // delete friend
+    // delete friend: Is this correct?
     deleteFriend({ params }, res) {
-        // delete
+        User.findOneAndUpdate(
+            { _id: params.username },
+            { $pull: { friends: { friendId: params.friendId} } }, // I need to add friendId to the "friend" virtual in User model
+            { new: true }
+        )
+            .then(dbuserData => res.json(dbuserData))
+            .catch(err => res.json(err));
     }
 };
 
