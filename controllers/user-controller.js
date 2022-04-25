@@ -48,8 +48,8 @@ const userController = {
     // update user
     updateUser({ params, body }, res) {
         User.findOneAndUpdate({ _id: params.id }, body, { new: true })
-            .then(dbUserData => {
-                if (!dbUserData) {
+            .then(dbThoughtData => {
+                if (!dbThoughtData) {
                     res.status(404).json({ message: 'No user found with that id!' });
                     return;
                 }
@@ -69,6 +69,16 @@ const userController = {
                 res.json(dbUserData);
             })
             .catch(err => res.status(400).json(err));
+    },
+
+    // post friend
+    createFriend({ body }, res){
+        // this has to select from the list of users
+    },
+
+    // delete friend
+    deleteFriend({ params }, res) {
+        // delete
     }
 };
 
