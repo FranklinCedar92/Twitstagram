@@ -31,7 +31,6 @@ const thoughtController = {
             });   
     },
     
-    // add thought //Franklin, benutz diesen Form um die "Freund zu Nutzer" Route zu schaffen. 
     addThought({ params, body }, res) {
         Thought.create(body)
         .then(({ _id }) => {
