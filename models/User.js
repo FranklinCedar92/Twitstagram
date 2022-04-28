@@ -14,12 +14,12 @@ const UserSchema = new Schema(
             unique: true,
             lowercase: true,
             // must match a valid email address
-            /*validate: {
+            validate: {
                 validator: function(v) {
                     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
                 },
-                message: "Please enter a valid email"
-            }*/
+                message:"Please enter a valid email"
+            }
         },
         thoughts: [
             // array of _id values referencing the Thought model
