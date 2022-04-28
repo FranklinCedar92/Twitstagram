@@ -3,10 +3,10 @@ const dateFormat = require('../utils/dateFormat');
 
 const ReactionSchema = new Schema(
     {
-        reactionID: {
+        /*reactionID: {
             type: Schema.Types.ObjectId,
             default: () => Types.ObjectId()
-        },
+        },*/
         reactionBody: {
             type: String,
             required: true,
@@ -34,7 +34,8 @@ const ThoughtSchema = new Schema(
         thoughtText: {
             type: String,
             required: true,
-            //must be between 1 and 280 char ?
+            minlength: 1,
+            maxlength: 280
         },
         createdAt: {
             type: Date,

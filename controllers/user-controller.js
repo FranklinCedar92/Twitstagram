@@ -5,8 +5,10 @@ const userController = {
     getAllUser(req, res) {
         User.find({})
             .populate({
-                path: 'thoughts',
-                select:'-__v'
+                path: 'thoughts'
+            })
+            .populate({
+                path: 'friends'
             })
             .select('-__v')
             .sort({ _id: -1 })
@@ -21,8 +23,10 @@ const userController = {
     getUserById({ params }, res) {
         User.findOne({ _id: params.id })
             .populate({
-                path: 'thoughts',
-                select:'-__v'
+                path: 'thoughts'
+            })
+            .populate({
+                path: 'friends'
             })
             .select('-__v')
             .then(dbUserData => 
@@ -43,7 +47,11 @@ const userController = {
 
     // update user
     updateUser({ params, body }, res) {
-        User.findOneAndUpdate({ _id: params.id }, body, { new: true })
+        User.findOneAndUpdate(
+            { _id: params.id }, 
+            body, 
+            { new: true }
+            )
             .then(dbThoughtData => {
                 if (!dbThoughtData) {
                     res.status(404).json({ message: 'No user found with that id!' });
@@ -67,12 +75,12 @@ const userController = {
             .catch(err => res.status(400).json(err));
     },
 
-    // post friend: Is this correct?
+    // post friend
     createFriend({ params, body }, res){
         // this has to select from the list of users
         User.findOneAndUpdate(
-            { _id: params.username }, //is this the right criteria
-            { $push: { friends: username } }, // again, right criteria?
+            { _id: params.id }, //
+            { $push: { friends: params.friendsId } }, // "params.<>" has to match router route
             { new: true }
         )
         .then(dbUserData => {
@@ -86,14 +94,16 @@ const userController = {
         
     },
 
-    // delete friend: Is this correct?
+    // delete friend
     deleteFriend({ params }, res) {
         User.findOneAndUpdate(
-            { _id: params.username },
-            { $pull: { friends: { friendId: params.friendId} } }, // I need to add friendId to the "friend" virtual in User model
+            { _id: params.id },
+            { $pull: { friends:  params.friendsId}  }, // the "params.<>" needs to match the router route
             { new: true }
         )
-            .then(dbuserData => res.json(dbuserData))
+            .then(dbUserData =>{ 
+                console.log(dbUserData);
+                res.json(dbUserData)})
             .catch(err => res.json(err));
     }
 };
